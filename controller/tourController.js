@@ -1,6 +1,7 @@
 
 const Tour=require('../model/tourmodel')
 const APIFeatures=require("../utlits/apiFeature")
+const catchAsync=require("../utlits/catchAsync")
 
 
 
@@ -11,35 +12,38 @@ const aliasTopTours=(req,res,next)=>{
     next()
 }
 
-const createTour=async(req,res)=>{
-    try{
+
+
+const createTour=catchAsync( async(req,res)=>{
+    
         const tour=new Tour(req.body)
         await tour.save()
-        res.send("data added")
-    }catch(err){
-        console.log(err)
-    }
-    }
+        res.status(201).send({
+            status:'success',
+            data:{
+                tour
+            }
+        })
+  
+    })
 
    
 
-const getTour=async(req,res)=>{
-    try{
+const getTour= catchAsync (async(req,res)=>{
+    
   //execution
       const features=new APIFeatures(Tour.find(),req.query).filter().sort().LimitFields().Pagination()
 
     const tours=await features.query
-        res.send({status:true,result:tours.length,data:tours})
+        res.status(200).send({status:true,result:tours.length,data:tours})
         
   
-   }catch(err){
-res.status(404).send(err.message)
-   }
-}
+   
+})
 
-const getTourStats=async(req,res)=>{
+const getTourStats=catchAsync(async(req,res)=>{
 
-    try{
+   
         const stats=await Tour.aggregate([
             {$match:{ratingsAverage:{$gte:4.5}}},
 
@@ -63,10 +67,7 @@ const getTourStats=async(req,res)=>{
             result:stats.length,
             data:stats})
 
-    }catch(err){
-        res.status(404).send(err.message)
-    }
-}
+        })
 
 const getTourMonthly=async(req,res)=>{
 try{
@@ -77,28 +78,21 @@ try{
 }
 
 
-const updateTour=async(req,res)=>{
+const updateTour=catchAsync(async(req,res)=>{
     const Id=req.params.id
     const payload=req.body
-    try{
-        await Tour.findByIdAndUpdate({_id:Id},payload)
-        res.send("updated")
-    }catch(err){
-        res.send(err.message)
-    }
-}
+    await Tour.findByIdAndUpdate({_id:Id},payload)
+    res.status(200).send("updated")
+   
+})
 
 
-const deleteTour=async(req,res)=>{
+const deleteTour=catchAsync(async(req,res)=>{
     const Id=req.params.id
-
-    try{
-        await Tour.findByIdAndDelete({_id:Id})
-        res.send("deleted")
-    }catch(err){
-        res.send(err.message)
-    }
-}
+    await Tour.findByIdAndDelete({_id:Id})
+    res.status(200).send("deleted")
+    
+})
 
 
 module.exports={getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly}
