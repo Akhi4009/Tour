@@ -1,4 +1,5 @@
 const User =require("../model/usermodel")
+const {promisify} = require("util")
 require('dotenv').config()
 const jwt=require("jsonwebtoken")
 const AppError = require("../utlits/appError")
@@ -6,6 +7,7 @@ const AppError = require("../utlits/appError")
 const catchAsync=require("../utlits/catchAsync")
 
 const signToken= id =>{
+    console.log(process.env.jwt_expires);
     return jwt.sign({id},process.env.jwt_secret,{
         expiresIn:process.env.jwt_expires
     })
@@ -58,4 +60,36 @@ exports.logIn = catchAsync(async(req,res,next)=>{
         token
     })
     
+})
+
+exports.protect=catchAsync(async(req,res,next)=>{
+
+    // getting token and check of it's there
+    let token
+    // console.log(req.headers)
+    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
+        token=req.headers.authorization.split(' ')[1]
+        // console.log(token);
+    }
+
+    if(!token){
+        return next( new AppError('You are not logged in! please log in to get access',401))
+    }
+
+    // verification token
+   
+   
+    const decoded=await promisify(jwt.verify)(token,process.env.jwt_secret)
+
+   // check if user still exist
+    const freshUser=await User.findById(decoded.id)
+
+    if (!freshUser){
+        return next(new AppError("The user belonging to this token does no longer exist"))
+    };
+
+    // check if user changed password after the token was issued
+    
+   
+   next()
 })
