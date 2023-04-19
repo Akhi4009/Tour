@@ -1,7 +1,9 @@
 
-const Tour=require('../model/tourmodel')
-const APIFeatures=require("../utlits/apiFeature")
-const catchAsync=require("../utlits/catchAsync")
+const Tour = require('../model/tourmodel')
+const APIFeatures = require("../utlits/apiFeature")
+const catchAsync = require("../utlits/catchAsync")
+const AppError = require("../utlits/appError")
+
 
 
 
@@ -14,7 +16,7 @@ const aliasTopTours=(req,res,next)=>{
 
 
 
-const createTour=catchAsync( async(req,res)=>{
+const createTour=catchAsync( async(req,res,next)=>{
     
         const tour=new Tour(req.body)
         await tour.save()
@@ -29,7 +31,7 @@ const createTour=catchAsync( async(req,res)=>{
 
    
 
-const getTour= catchAsync (async(req,res)=>{
+const getTour= catchAsync (async(req,res,next)=>{
     
   //execution
       const features=new APIFeatures(Tour.find(),req.query).filter().sort().LimitFields().Pagination()
@@ -41,7 +43,7 @@ const getTour= catchAsync (async(req,res)=>{
    
 })
 
-const getTourStats=catchAsync(async(req,res)=>{
+const getTourStats=catchAsync(async(req,res,next)=>{
 
    
         const stats=await Tour.aggregate([
@@ -69,7 +71,7 @@ const getTourStats=catchAsync(async(req,res)=>{
 
         })
 
-const getTourMonthly=async(req,res)=>{
+const getTourMonthly=async(req,res,next)=>{
 try{
   
 }catch(err){
@@ -77,11 +79,27 @@ try{
 }
 }
 
+const getTourByID=catchAsync(async(req,res,next)=>{
 
-const updateTour=catchAsync(async(req,res)=>{
+    const tour=await Tour.findById(req.params.id)
+
+    if(!tour){
+        return next(new AppError('No tour foun by that id',404))
+    }
+    res.status(200).send({
+        status:'success',
+        data:tour
+    })
+
+})
+
+const updateTour=catchAsync(async(req,res,next)=>{
     const Id=req.params.id
     const payload=req.body
-    await Tour.findByIdAndUpdate({_id:Id},payload)
+   const tour= await Tour.findByIdAndUpdate({_id:Id},payload)
+   if(!tour){
+    return next(new AppError('No tour foun by that id',404))
+}
     res.status(200).send("updated")
    
 })
@@ -95,4 +113,4 @@ const deleteTour=catchAsync(async(req,res)=>{
 })
 
 
-module.exports={getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly}
+module.exports={getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly,getTourByID}

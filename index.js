@@ -5,6 +5,7 @@ const AppError=require("./utlits/appError")
 const globalErrorHandle=require("./controller/errorController")
 
 const tourRouter=require("./routes/tour.routes")
+const userRouter =require("./routes/user.routes")
 require('dotenv').config()
 const app=express()
 app.use(express.json())
@@ -16,12 +17,13 @@ app.get('/',(req,res)=>{
 })
 
 app.use("/tours",tourRouter)
+app.use("/users",userRouter)
 
 app.all('*',(req,res,next)=>{
     next(new AppError(`Can't find ${req.originalUrl} on this server`,404))
 
 })
-console.log(globalErrorHandle)
+
 
 app.use(globalErrorHandle)
 
