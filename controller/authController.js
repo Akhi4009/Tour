@@ -49,7 +49,7 @@ exports.logIn = catchAsync(async(req,res,next)=>{
     //check if user exist && password is correct
     const user = await User.findOne({email}).select('+password');
     // console.log(user)
-    const correct=await user.correctPassword(password,user.password)
+    
     // console.log(correct)
 
     if(!user || !(await user.correctPassword(password,user.password) )){
@@ -179,7 +179,7 @@ exports.resetPassword=catchAsync(async(req,res,next)=>{
     if(!user){
         return next(new AppError('token is unvalid or has expired',400))
     }
-    
+
     user.password=req.body.password
     user.passwordConfirm=req.body.passwordConfirm
     user.passwordResetToken=undefined
@@ -196,4 +196,33 @@ exports.resetPassword=catchAsync(async(req,res,next)=>{
         status:"Success",
         token
     })
+})
+
+exports.updatePassword=catchAsync(async(req,res,next)=>{
+
+    //get user from collection
+    
+    const user= await User.findOne({id:req.user._id}).select('+password')
+
+    
+    //check if posted current password is correct
+
+    if(! (await user.correctPassword(req.body.passwordcurrent,user.password))){
+        return next(new AppError('Your current password is wrong.',401))
+    }
+
+    //if so, update password
+    user.password=req.body.password;
+    user.passwordConfirm=req.body.passwordConfirm;
+
+    await user.save()
+
+    const token=signToken(user._id)
+    //everything ok
+    res.status(200).send({
+        status:"Success",
+        token
+    })
+
+
 })
