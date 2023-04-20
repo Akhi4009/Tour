@@ -3,29 +3,31 @@ const {promisify} = require("util")
 require('dotenv').config()
 const jwt=require("jsonwebtoken")
 const AppError = require("../utlits/appError")
+const sendEmail=require("../utlits/email")
 
 const catchAsync=require("../utlits/catchAsync")
 
 const signToken= id =>{
-    console.log(process.env.jwt_expires);
+   
     return jwt.sign({id},process.env.jwt_secret,{
         expiresIn:process.env.jwt_expires
     })
 }
 
 exports.signup=catchAsync(async(req,res,next)=>{
-    const {name,email,password,passwordConfirm}=req.body
+    const {name,email,password,passwordConfirm,role}=req.body
     const newUser=await User.create({
         name,
         email,
         password,
-        passwordConfirm
+        passwordConfirm,
+        role
     });
     
 
     const token=signToken(newUser._id)
-    res.status(200).send({
-        stats:"success",
+    res.status(200).json({
+        status:"success",
        token,
         data:{
             user:newUser
@@ -90,6 +92,42 @@ exports.protect=catchAsync(async(req,res,next)=>{
 
     // check if user changed password after the token was issued
     
-   
+   if(freshUser.changedPassword(decoded.iat)){
+
+    return next(new AppError('User recently changed password! Please log in again',401))
+
+   }
+
+   req.user=freshUser;
+
+
    next()
+})
+
+exports.restrictTo = (...roles)=>{
+    return (req,res,next)=>{
+        if(!roles.includes(req.user.role)){
+            return next(new AppError('You do not have permision to perform this action',403))
+        }
+        next()
+    }
+
+}
+
+exports.forgetPassword=catchAsync(async(req,res,next)=>{
+
+    //get user based on posted email
+    const user=await User.findOne({email:req.body.email})
+    if(!user){
+        return next(new AppError('There is no user with this email',404))
+    }
+
+    //generate the random reset token
+    const resetToken=user.createPasswordResetToken()
+    await user.save({validateBeforeSave:false})
+
+    
+
+   
+
 })

@@ -3,7 +3,7 @@ const router=express.Router()
 const Tour=require("../model/tourmodel")
 
 const {getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly, getTourByID}=require("../controller/tourController")
-
+const {protect,restrictTo} = require("../controller/authController")
 
 router.route("/plan-monthly/:year",getTourMonthly)
 router.route("/top-5-cheap")
@@ -14,7 +14,7 @@ router.route("/tour-stats")
 
 
 router.route("/")
-.get( getTour)
+.get(protect,restrictTo('admin','lead-guide'), getTour)
 .post( createTour)
 
 router.route("/:id")
