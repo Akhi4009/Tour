@@ -1,4 +1,5 @@
 const User =require("../model/usermodel")
+const crypto=require("crypto")
 const {promisify} = require("util")
 require('dotenv').config()
 const jwt=require("jsonwebtoken")
@@ -124,10 +125,75 @@ exports.forgetPassword=catchAsync(async(req,res,next)=>{
 
     //generate the random reset token
     const resetToken=user.createPasswordResetToken()
+   
+    
     await user.save({validateBeforeSave:false})
 
-    
 
+    // send it to users email
+    const resetURL= `${req.protocol}://${req.get('host')}/users/resetpassword/${resetToken}`
+
+    const message= `Forget your password? Submit a patch request with your new password and passwordConfirm to:
+     ${resetURL}.\n if you did not forget your password, please ignore this email.`;
+
+try{
+    await sendEmail({
+        email:user.email,
+        subject:'Your password reset token (valid for 10 min)',
+        message
+     })
+
+     res.status(200).json({
+        status:"success",
+        "message":"Token sent to email!"
+     })
+}catch(err){
+    user.passwordResetToken=undefined;
+    user.passwordResetExpires=undefined
+    await user.save({validateBeforeSave:false})
+    console.log(err)
+    return next(new AppError('There was an error sending the email. try again letter',500))
+
+}
+    
    
 
+})
+
+exports.resetPassword=catchAsync(async(req,res,next)=>{
+
+    //get user based on the token
+    const hashedToken=crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex')
+    console.log(hashedToken)
+
+    const user= await User.findOne({
+        passwordResetToken:hashedToken,
+        passwordResetExpires:{$gt: Date.now()}
+    })
+
+    // if user has not expired, and there is user , set new password
+
+    if(!user){
+        return next(new AppError('token is unvalid or has expired',400))
+    }
+    
+    user.password=req.body.password
+    user.passwordConfirm=req.body.passwordConfirm
+    user.passwordResetToken=undefined
+    user.passwordResetExpires=undefined
+    
+    await user.save()
+
+    //update changed password property for the user
+
+    // log the user in send jwt
+    const token=signToken(user._id)
+    //everything ok
+    res.status(200).send({
+        status:"Success",
+        token
+    })
 })
