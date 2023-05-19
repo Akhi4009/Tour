@@ -18,7 +18,36 @@ const tourScema=mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    startDates:[Date]
+    startDates:[Date],
+    secretTour:{
+        type:Boolean,
+        default:false
+    },
+    startLocation: {
+        //GeoJSON
+        type: {
+            type: String,
+            default: 'Point',
+            enum: ['Point']
+        },
+        coordinate: [Number],
+        address: String,
+        description: String
+    },
+    Location: [
+    {
+        type: {
+            type: String,
+            default: 'Point',
+            enum: ['Point']
+        },
+        coordinate: [Number],
+        address: String,
+        description: String,
+        day: Number
+    }
+    ],
+    guides:Array
 
 },{
     versionKey:false

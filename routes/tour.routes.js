@@ -14,7 +14,7 @@ router.route("/tour-stats")
 
 
 router.route("/")
-.get(protect,restrictTo('admin','lead-guide'), getTour)
+.get(protect,restrictTo('admin','lead-guide','user'), getTour)
 .post( createTour)
 
 router.route("/:id")
