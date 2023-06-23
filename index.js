@@ -1,4 +1,5 @@
 const express=require("express")
+const rateLimit=require("express-rate-limit")
 
 const { connection } = require("./db")
 const AppError=require("./utlits/appError")
@@ -8,6 +9,14 @@ const tourRouter=require("./routes/tour.routes")
 const userRouter =require("./routes/user.routes")
 require('dotenv').config()
 const app=express()
+
+const limiter=rateLimit({
+    max:100,
+    windowMs: 60 * 60 * 1000,
+    message: 'Toomany request from this ip, please try again in an hour'
+})
+
+app.use('/',limiter)
 app.use(express.json())
 
 
