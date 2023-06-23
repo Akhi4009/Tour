@@ -1,5 +1,6 @@
 const express=require("express")
 const rateLimit=require("express-rate-limit")
+const helmet=require("helmet")
 
 const { connection } = require("./db")
 const AppError=require("./utlits/appError")
@@ -10,6 +11,8 @@ const userRouter =require("./routes/user.routes")
 require('dotenv').config()
 const app=express()
 
+app.use(helmet())
+
 const limiter=rateLimit({
     max:100,
     windowMs: 60 * 60 * 1000,
@@ -17,7 +20,8 @@ const limiter=rateLimit({
 })
 
 app.use('/',limiter)
-app.use(express.json())
+
+app.use(express.json({ limit: '10kb'}))
 
 
 
