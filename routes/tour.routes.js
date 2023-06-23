@@ -19,8 +19,8 @@ router.route("/")
 
 router.route("/:id")
 .get(getTourByID)
-.patch( updateTour)
-.delete( deleteTour)
+.patch(protect,restrictTo('admin'),updateTour)
+.delete(protect,restrictTo('admin'),deleteTour)
 
 
 

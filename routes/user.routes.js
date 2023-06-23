@@ -15,7 +15,7 @@ router.delete("/deleteme",protect, deleteMe)
 
 
 router.route("/")
-.get(protect,getUser)
+.get(protect,restrictTo('admin'),getUser)
 
 
 module.exports=router
