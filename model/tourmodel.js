@@ -59,7 +59,7 @@ const tourScema=mongoose.Schema({
 },{
     versionKey:false
 })
-const Tour=mongoose.model("tour",tourScema)
+const Tour=mongoose.model("Tour",tourScema)
 
 
 module.exports=Tour
