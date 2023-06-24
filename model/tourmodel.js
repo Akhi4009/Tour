@@ -30,24 +30,31 @@ const tourScema=mongoose.Schema({
             default: 'Point',
             enum: ['Point']
         },
-        coordinate: [Number],
+        coordinates: [Number],
         address: String,
         description: String
     },
-    Location: [
+    locations: [
     {
         type: {
             type: String,
             default: 'Point',
             enum: ['Point']
         },
-        coordinate: [Number],
+        coordinates: [Number],
         address: String,
         description: String,
         day: Number
     }
     ],
-    guides:Array
+    guides:[
+        {
+        type:mongoose.Schema.ObjectId,
+        ref: 'User'
+
+        }
+
+    ]
 
 },{
     versionKey:false
