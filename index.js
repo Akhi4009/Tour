@@ -8,6 +8,7 @@ const globalErrorHandle=require("./controller/errorController")
 
 const tourRouter=require("./routes/tour.routes")
 const userRouter =require("./routes/user.routes")
+const reviewRouter=require("./routes/review.routes")
 require('dotenv').config()
 const app=express()
 
@@ -31,6 +32,7 @@ app.get('/',(req,res)=>{
 
 app.use("/tours",tourRouter)
 app.use("/users",userRouter)
+app.use('/review',reviewRouter)
 
 app.all('*',(req,res,next)=>{
     next(new AppError(`Can't find ${req.originalUrl} on this server`,404))

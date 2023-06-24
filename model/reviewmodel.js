@@ -1,6 +1,6 @@
 const mongoose =require("mongoose")
 
-const reviewSchema= new mongoose.Schema({
+const reviewSchema= mongoose.Schema({
     review:{
         type:String,
         required: [true, 'Review can not be empty!']
@@ -15,17 +15,17 @@ const reviewSchema= new mongoose.Schema({
         default: Date.now
     },
     tour: {
-        type:mongoose.model.ObjectId,
+        type:mongoose.Schema.ObjectId,
         ref:'Tour',
         required: [true, 'Review must belong to a tour']
     },
     user: {
-        type:mongoose.model.ObjectId,
+        type:mongoose.Schema.ObjectId,
         ref:'User',
         required:[true, 'Review must belong to a user'] 
     
     }
 })
 
-const Review= mongoose.model('Review', reviewSchema);
+const Review= mongoose.model("Review", reviewSchema);
 module.exports=Review

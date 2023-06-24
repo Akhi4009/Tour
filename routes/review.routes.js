@@ -6,7 +6,7 @@ const {getAllReviews,createReview}=require("../controller/reviewController")
 const {protect,restrictTo}=require("../controller/authController")
 
 router.get("/allReview",getAllReviews)
-router.post("/createReview",protect,restrictTo('admin'),createReview)
+router.post("/create",protect,restrictTo('user'),createReview)
 
 
 module.exports=router
