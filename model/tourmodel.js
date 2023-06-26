@@ -54,11 +54,27 @@ const tourScema=mongoose.Schema({
 
         }
 
-    ]
+    ],
+    
+
 
 },{
     versionKey:false
-})
+},
+
+    {
+        toJSON: {virtuals: true},
+        toObject:{virtuals: true}
+
+    }
+    )
+// virtual populate
+    tourScema.virtual('reviews',{
+        ref:'Review',
+        foreignField:'tour',
+        localField:'_id'
+    })
+
 const Tour=mongoose.model("Tour",tourScema)
 
 

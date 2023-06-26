@@ -43,6 +43,8 @@ const getTour= catchAsync (async(req,res,next)=>{
    
 })
 
+
+
 const getTourStats=catchAsync(async(req,res,next)=>{
 
    
@@ -81,10 +83,10 @@ try{
 
 const getTourByID=catchAsync(async(req,res,next)=>{
 
-    const tour=await Tour.findById(req.params.id)
+    const tour=await Tour.findById(req.params.id).populate("reviews")
 
     if(!tour){
-        return next(new AppError('No tour foun by that id',404))
+        return next(new AppError('No tour found by that id',404))
     }
     res.status(200).send({
         status:'success',
