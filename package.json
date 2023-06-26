@@ -8,8 +8,8 @@
     "server": "nodemon index.js",
     "debug": "ndb index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["tour"],
+  "author": "Akhilesh yadav",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
