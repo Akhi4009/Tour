@@ -9,17 +9,23 @@ router.post("/signup",signup)
 router.post("/login",logIn)
 router.post("/forgetpassword",forgetPassword)
 router.patch("/resetpassword/:token",resetPassword)
-router.patch("/updatepassword",protect, updatePassword)
-router.patch("/updateme",protect, updateMe)
-router.delete("/deleteme",protect, deleteMe)
+
+router.use(protect)
+
+router.patch("/updatepassword", updatePassword)
+router.patch("/updateme", updateMe)
+router.delete("/deleteme", deleteMe)
+
+//midleware
+router.use(restrictTo('admin'))
 
 
 router.route("/")
-.get(protect,restrictTo('admin'),getUser)
+.get(getUser)
 router.route("/:id")
-.delete(protect,restrictTo("admin"),deleteUser)
-.patch(protect,restrictTo("admin"),updateUser)
-.get(protect,restrictTo("admin"),userDetails)
+.delete(deleteUser)
+.patch(updateUser)
+.get(userDetails)
 
 
 module.exports=router

@@ -6,13 +6,16 @@ const {getAllReviews,createReview, deleteReview, updateReview, getReviewDetails}
 const {protect,restrictTo}=require("../controller/authController")
 
 
+router.use(protect)
+
+
 router.get("/allReview",getAllReviews)
-router.post("/create",protect,restrictTo('user'),createReview)
+router.post("/create",restrictTo('user'),createReview)
 
 router.route("/:id")
-.delete(protect,deleteReview)
-.patch(protect,updateReview)
-.get(protect,getReviewDetails)
+.delete(restrictTo("admin","user"),deleteReview)
+.patch(restrictTo("admin","user"),updateReview)
+.get(getReviewDetails)
 
 
 module.exports=router

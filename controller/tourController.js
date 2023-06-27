@@ -16,9 +16,6 @@ const aliasTopTours=(req,res,next)=>{
     next()
 }
 
-
-
-
 const getTourStats=catchAsync(async(req,res,next)=>{
 
    

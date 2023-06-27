@@ -5,7 +5,7 @@ const Tour=require("../model/tourmodel")
 const {getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly, getTourByID}=require("../controller/tourController")
 const {protect,restrictTo} = require("../controller/authController")
 
-router.route("/plan-monthly/:year",getTourMonthly)
+router.route("/plan-monthly/:year",protect,restrictTo("admin","lead-guide","guide"),getTourMonthly)
 router.route("/top-5-cheap")
 .get(aliasTopTours,getTour)
 
@@ -14,13 +14,13 @@ router.route("/tour-stats")
 
 
 router.route("/")
-.get(protect,restrictTo('admin','lead-guide','user'), getTour)
-.post( createTour)
+.get( getTour)
+.post(protect,restrictTo("admin","lead-guide"), createTour)
 
 router.route("/:id")
-.get(protect,getTourByID)
-.patch(protect,restrictTo('admin'),updateTour)
-.delete(protect,restrictTo('admin'),deleteTour)
+.get(getTourByID)
+.patch(protect,restrictTo('admin','lead-guide'),updateTour)
+.delete(protect,restrictTo('admin','lead-guide'),deleteTour)
 
 
 
