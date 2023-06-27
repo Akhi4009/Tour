@@ -1,5 +1,6 @@
 const catchAsync = require("../utlits/catchAsync");
 const AppError = require("../utlits/appError")
+const APIFeatures=require("../utlits/apiFeature")
 
 
 exports.deleteOne=Model=>catchAsync(async(req,res,next)=>{
@@ -35,5 +36,54 @@ exports.updateOne=Model=>catchAsync(async(req,res,next)=>{
      })
 })
 
+exports.createOne=Model=>catchAsync(async(req,res,next)=>{
 
+    const doc=new Model(req.body)
+    await doc.save()
+
+
+    res.status(201).send({
+        status:'success',
+        data:{
+            data:doc
+        }
+    })
+
+})
+
+exports.getOne=(Model,popoption)=>catchAsync(async(req,res,next)=>{
+
+    let query =  await Model.findById(req.params.id);
+    if(popoption) query=query.populate(popoption)
+
+    const doc= await query
+    
+    
+    if(!doc){
+        return next(new AppError('No Document found with this id',404))
+    }
+    res.status(200).json({
+        status:'success',
+        data:{
+            data:doc
+        }
+    })
+
+})
+
+exports.getAll=Model=>catchAsync (async(req,res,next)=>{
+    
+    //execution
+        const features=new APIFeatures(Model.find(),req.query)
+        .filter()
+        .sort()
+        .LimitFields()
+        .Pagination()
+  
+      const doc=await features.query
+          res.status(200).send({
+            status:true,
+            result:doc.length,
+            data:doc})
+        })
 

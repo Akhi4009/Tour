@@ -3,7 +3,7 @@ const router=express.Router()
 const User=require("../model/usermodel")
 
 const {signup,logIn,protect,restrictTo,forgetPassword,resetPassword, updatePassword} = require("../controller/authController")
-const {getUser,updateMe,deleteMe, deleteUser, updateUser} = require("../controller/userController")
+const {getUser,updateMe,deleteMe, deleteUser, updateUser, userDetails} = require("../controller/userController")
 
 router.post("/signup",signup)
 router.post("/login",logIn)
@@ -19,6 +19,7 @@ router.route("/")
 router.route("/:id")
 .delete(protect,restrictTo("admin"),deleteUser)
 .patch(protect,restrictTo("admin"),updateUser)
+.get(protect,restrictTo("admin"),userDetails)
 
 
 module.exports=router

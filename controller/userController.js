@@ -15,14 +15,6 @@ const filteredObj=(obj,...allowedfields)=>{
     return newObj
 }
 
-const getUser= catchAsync (async(req,res,next)=>{
-    const features=new APIFeatures(User.find(),req.query).filter().sort().LimitFields().Pagination()
-
-    const users=await features.query
-        res.status(200).send({status:true,result:users.length,data:users})
-  
-        })
-
 const updateMe=catchAsync(async(req,res,next)=>{
 
     // create error if user posts password data
@@ -59,8 +51,13 @@ const deleteMe=catchAsync(async(req,res,next)=>{
 
 // for admin
 
-const deleteUser=factory.deleteOne(User)
+const getUser=factory.getAll(User)
 
 // Do not update password with this
 const updateUser=factory.updateOne(User)
-  module.exports ={getUser,updateMe,deleteMe,deleteUser,updateUser}
+const userDetails=factory.getOne(User)
+const deleteUser=factory.deleteOne(User)
+
+
+
+  module.exports ={getUser,updateMe,deleteMe,deleteUser,updateUser,userDetails}
