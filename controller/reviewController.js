@@ -1,5 +1,6 @@
 const Review=require("../model/reviewmodel")
 const catchAsync=require("../utlits/catchAsync")
+const factory=require("../controller/handlerFactory")
 
 
 exports.getAllReviews=catchAsync(async(req,res,next)=>{
@@ -26,3 +27,9 @@ exports.createReview=catchAsync(async(req,res,next)=>{
         }
     })
 })
+
+
+exports.deleteReview=factory.deleteOne(Review)
+
+
+exports.updateReview=factory.updateOne(Review)

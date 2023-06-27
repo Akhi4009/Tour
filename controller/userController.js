@@ -2,6 +2,7 @@ const User = require("../model/usermodel")
 const catchAsync = require("../utlits/catchAsync")
 const APIFeatures=require("../utlits/apiFeature")
 const AppError =require("../utlits/appError")
+const factory=require("../controller/handlerFactory")
 
 const filteredObj=(obj,...allowedfields)=>{
    
@@ -55,4 +56,11 @@ const deleteMe=catchAsync(async(req,res,next)=>{
     })
 
 })
-  module.exports ={getUser,updateMe,deleteMe}
+
+// for admin
+
+const deleteUser=factory.deleteOne(User)
+
+// Do not update password with this
+const updateUser=factory.updateOne(User)
+  module.exports ={getUser,updateMe,deleteMe,deleteUser,updateUser}

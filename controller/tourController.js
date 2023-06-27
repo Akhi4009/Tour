@@ -3,6 +3,8 @@ const Tour = require('../model/tourmodel')
 const APIFeatures = require("../utlits/apiFeature")
 const catchAsync = require("../utlits/catchAsync")
 const AppError = require("../utlits/appError")
+const factory=require("../controller/handlerFactory")
+const { Model } = require('mongoose')
 
 
 
@@ -95,24 +97,36 @@ const getTourByID=catchAsync(async(req,res,next)=>{
 
 })
 
-const updateTour=catchAsync(async(req,res,next)=>{
-    const Id=req.params.id
-    const payload=req.body
-   const tour= await Tour.findByIdAndUpdate({_id:Id},payload)
-   if(!tour){
-    return next(new AppError('No tour foun by that id',404))
-}
-    res.status(200).send("updated")
+const updateTour=factory.updateOne(Tour)
+
+// const updateTour=catchAsync(async(req,res,next)=>{
+//     const Id=req.params.id
+//     const payload=req.body
+//    const tour= await Tour.findByIdAndUpdate({_id:Id},payload)
+//    if(!tour){
+//     return next(new AppError('No tour foun by that id',404))
+// }
+//     res.status(200).send("updated")
    
-})
+// })
 
 
-const deleteTour=catchAsync(async(req,res)=>{
-    const Id=req.params.id
-    await Tour.findByIdAndDelete({_id:Id})
-    res.status(200).send("deleted")
-    
-})
+const deleteTour= factory.deleteOne(Tour)
+
+// const deleteTour=catchAsync(async(req,res)=>{
+//     const Id=req.params.id
+//    const tour= await Tour.findByIdAndDelete({_id:Id})
+
+//    if(!tour){
+//     returnext(new AppError("No tour found with this ID",404));
+//    }
+
+
+//     res.status(204).json({
+//       status:"success",
+//       data:null
+//     })
+// })
 
 
 module.exports={getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly,getTourByID}
