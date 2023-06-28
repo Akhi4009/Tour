@@ -93,7 +93,7 @@ exports.getAll=Model=>catchAsync (async(req,res,next)=>{
         .filter()
         .sort()
         .LimitFields()
-        .Pagination()
+        // .Pagination()
   
     //   const doc=await features.query.explain()
       const doc=await features.query
