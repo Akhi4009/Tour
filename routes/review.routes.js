@@ -1,16 +1,16 @@
 const express=require("express")
 
-const router=express.Router()
-const Review=require("../model/reviewmodel")
-const {getAllReviews,createReview, deleteReview, updateReview, getReviewDetails}=require("../controller/reviewController")
-const {protect,restrictTo}=require("../controller/authController")
 
+const Review=require("../model/reviewmodel")
+const {getAllReviews,createReview, deleteReview, updateReview, getReviewDetails,setTourUserIds}=require("../controller/reviewController")
+const {protect,restrictTo}=require("../controller/authController")
+const router=express.Router({mergeParams:true})
 
 router.use(protect)
 
-
-router.get("/allReview",getAllReviews)
-router.post("/create",restrictTo('user'),createReview)
+router.route("/")
+.get(getAllReviews)
+.post(restrictTo('user'),setTourUserIds,createReview)
 
 router.route("/:id")
 .delete(restrictTo("admin","user"),deleteReview)

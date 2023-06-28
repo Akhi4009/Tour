@@ -56,30 +56,46 @@ exports.getOne=(Model,popoption)=>catchAsync(async(req,res,next)=>{
     let query =  await Model.findById(req.params.id);
     if(popoption) query=query.populate(popoption)
 
+    
     const doc= await query
     
     
     if(!doc){
         return next(new AppError('No Document found with this id',404))
     }
+
+    if(doc.reviews){
+        res.status(200).json({
+        status:'success',
+        data:{
+            data:doc,
+            review:doc.reviews
+        }
+    })
+}else{
     res.status(200).json({
         status:'success',
         data:{
             data:doc
         }
     })
+    }
+   
 
 })
 
 exports.getAll=Model=>catchAsync (async(req,res,next)=>{
     
+    let filter={};
+    if(req.params.tourId) filter = {tour:req.params.tourId}
     //execution
-        const features=new APIFeatures(Model.find(),req.query)
+        const features=new APIFeatures(Model.find(filter),req.query)
         .filter()
         .sort()
         .LimitFields()
         .Pagination()
   
+    //   const doc=await features.query.explain()
       const doc=await features.query
           res.status(200).send({
             status:true,

@@ -1,6 +1,6 @@
 const mongoose=require("mongoose")
 
-const tourScema=mongoose.Schema({
+const tourSchema=mongoose.Schema({
     "name":{type:String,required:true},
     "price":{type:Number,required:true},
     "duration":{type:Number,required:true},
@@ -68,14 +68,18 @@ const tourScema=mongoose.Schema({
 
     }
     )
-// virtual populate
-    tourScema.virtual('reviews',{
+
+
+tourSchema.index({price:1, ratingsAverage: 1})
+
+//virtual populate
+    tourSchema.virtual('reviews', {
         ref:'Review',
         foreignField:'tour',
         localField:'_id'
-    })
+    });
 
-const Tour=mongoose.model("Tour",tourScema)
+const Tour=mongoose.model("Tour",tourSchema)
 
 
 module.exports=Tour

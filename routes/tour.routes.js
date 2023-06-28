@@ -1,9 +1,13 @@
 const express=require('express')
 const router=express.Router()
 const Tour=require("../model/tourmodel")
-
 const {getTour,createTour,updateTour,deleteTour,aliasTopTours,getTourStats,getTourMonthly, getTourByID}=require("../controller/tourController")
 const {protect,restrictTo} = require("../controller/authController")
+const reviewRoute=require("../routes/review.routes")
+
+
+
+router.use("/:tourId/reviews",reviewRoute)
 
 router.route("/plan-monthly/:year",protect,restrictTo("admin","lead-guide","guide"),getTourMonthly)
 router.route("/top-5-cheap")
