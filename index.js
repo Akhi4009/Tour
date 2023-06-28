@@ -1,4 +1,5 @@
 const express=require("express")
+const path=require("path")
 const rateLimit=require("express-rate-limit")
 const helmet=require("helmet")
 
@@ -10,7 +11,15 @@ const tourRouter=require("./routes/tour.routes")
 const userRouter =require("./routes/user.routes")
 const reviewRouter=require("./routes/review.routes")
 require('dotenv').config()
+
+
 const app=express()
+
+app.set('view engine', 'pug')
+app.set('views',path.join(__dirname, 'views') )
+
+app.use(express.static(path.join(__dirname, 'public')))
+
 
 app.use(helmet())
 
@@ -26,8 +35,15 @@ app.use(express.json({ limit: '10kb'}))
 
 
 
-app.get('/',(req,res)=>{
-    res.send("Welcome!")
+// app.get('/',(req,res)=>{
+//     res.send("Welcome!")
+// })
+
+//routes
+
+app.get("/",(req,res)=>{
+
+    res.status(200).render('base')
 })
 
 app.use("/tours",tourRouter)
