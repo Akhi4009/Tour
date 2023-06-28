@@ -4,7 +4,7 @@ module.exports=(err,req,res,next)=>{
     err.status=err.status || 'error';
     res.status(err.statuscode).json({
         status:err.status,
-        message:err.stack
+        message:err.message
    });
 }
 
