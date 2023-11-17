@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 
 const tourSchema=mongoose.Schema({
-    "name":{type:String,required:true},
+    "name":{type:String,required:true,trim:true},
     "price":{type:Number,required:true},
     "duration":{type:Number,required:true},
    
