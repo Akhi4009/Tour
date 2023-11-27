@@ -15,6 +15,12 @@ const filteredObj=(obj,...allowedfields)=>{
     return newObj
 }
 
+const getMe=(req,res,next)=>{
+
+    req.params.id=req.user.id
+    next()
+}
+
 const updateMe=catchAsync(async(req,res,next)=>{
 
     // create error if user posts password data
@@ -60,4 +66,4 @@ const deleteUser=factory.deleteOne(User)
 
 
 
-  module.exports ={getUser,updateMe,deleteMe,deleteUser,updateUser,userDetails}
+  module.exports ={getUser,updateMe,deleteMe,deleteUser,updateUser,userDetails,getMe}
