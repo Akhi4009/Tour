@@ -73,12 +73,16 @@ const tourSchema=mongoose.Schema({
 tourSchema.index({price:1, ratingsAverage: 1})
 
 //virtual populate
+tourSchema.virtual('durationweeks').get(function(){
+    return this.duration/7
+})
     tourSchema.virtual('reviews', {
         ref:'Review',
         foreignField:'tour',
         localField:'_id'
     });
 
+    // Documents middleware runs before .save() and .create()
 const Tour=mongoose.model("Tour",tourSchema)
 
 
