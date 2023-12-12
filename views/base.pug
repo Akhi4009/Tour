@@ -3,50 +3,24 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
-        title Natours
         link(rel='stylesheet', href='style.css')
         link(rel='stylesheet',href='https://fonts.googleapis.com/css?family=Lato:300,400,400i,700')
         link(rel='shortcut icon' type="image/png" href="img/favicon.png")
         title Natours | The Park Camper Tour
     
     body 
-     header.header
-      nav.vnav.nav--tours 
-       a(href="#" class="nav__el") All tours
-      div.heaer__logo
+     // header
+     include _header
+    
+       
+    // Content
+    section.overview 
 
-        
+    // Footer
+    include _footer
      
-     
+    
 
 
-//- <header class="header">
-//-       <nav class="nav nav--tours">
-//-         <a href="#" class="nav__el">All tours</a>
-//-         <form class="nav__search">
-//-           <button class="nav__search-btn">
-//-             <svg>
-//-               <use xlink:href="img/icons.svg#icon-search"></use>
-//-             </svg>
-//-           </button>
-//-           <input
-//-             type="text"
-//-             placeholder="Search tours"
-//-             class="nav__search-input"
-//-           />
-//-         </form>
-//-       </nav>
-//-       <div class="header__logo">
-//-         <img src="img/logo-white.png" alt="Natours logo" />
-//-       </div>
-//-       <nav class="nav nav--user">
-//-         <a href="#" class="nav__el">My bookings</a>
-//-         <a href="#" class="nav__el">
-//-           <img src="img/user.jpg" alt="User photo" class="nav__user-img" />
-//-           <span>Jonas</span>
-//-         </a>
 
-//-         <!-- <button class="nav__el">Log in</button>
-//-         <button class="nav__el nav__el--cta">Sign up</button> -->
-//-       </nav>
-//-     </header>
+    
