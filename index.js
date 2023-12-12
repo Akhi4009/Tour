@@ -42,9 +42,9 @@ app.use(express.json({ limit: '10kb'}))
 
 //routes
 app.use("/",viewRouter)
-app.use("/tours",tourRouter)
-app.use("/users",userRouter)
-app.use('/review',reviewRouter)
+app.use("/api/tours",tourRouter)
+app.use("/api/users",userRouter)
+app.use('/api/review',reviewRouter)
 
 app.all('*',(req,res,next)=>{
     next(new AppError(`Can't find ${req.originalUrl} on this server`,404))

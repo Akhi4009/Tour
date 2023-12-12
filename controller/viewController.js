@@ -1,9 +1,20 @@
+const Tour =require("../model/tourmodel")
+const catchAsync=require("../utlits/catchAsync")
 
+const getOverview=catchAsync(async(req,res,next)=>{
+   
+    // Get Tour data from collection
+    const tours = await Tour.find()
+    
 
-const getOverview=((req,res)=>{
+    // Build template
+
+    // render that template using tou data
     res.status(200).render('overview',{
-        title:'All Tours'
-    });
+        title:'All Tours',
+        tours
+    })
+    next()
 });
 
 const getTour=((req,res)=>{
@@ -11,5 +22,8 @@ const getTour=((req,res)=>{
         title:'The Forest Hiker tour'
     });
 })
+
+
+
 
 module.exports={getOverview,getTour}
