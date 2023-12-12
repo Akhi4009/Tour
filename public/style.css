@@ -830,6 +830,9 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+  
   }
   .footer__nav li {
     margin-left: 1.5rem;

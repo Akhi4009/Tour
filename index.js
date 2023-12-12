@@ -10,6 +10,7 @@ const globalErrorHandle=require("./controller/errorController")
 const tourRouter=require("./routes/tour.routes")
 const userRouter =require("./routes/user.routes")
 const reviewRouter=require("./routes/review.routes")
+const viewRouter =require("./routes/viewRoutes")
 require('dotenv').config()
 
 
@@ -40,12 +41,7 @@ app.use(express.json({ limit: '10kb'}))
 // })
 
 //routes
-
-app.get("/",(req,res)=>{
-
-    res.status(200).render('base')
-})
-
+app.use("/",viewRouter)
 app.use("/tours",tourRouter)
 app.use("/users",userRouter)
 app.use('/review',reviewRouter)
