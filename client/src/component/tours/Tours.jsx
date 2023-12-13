@@ -7,6 +7,7 @@ const Tours = () => {
 
   const dispatch=useDispatch()
   const {tours} =useSelector(state=>state.tour)
+  console.log(tours)
   
   useEffect(()=>{
 

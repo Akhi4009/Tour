@@ -8,7 +8,7 @@ export const getTours=()=>async dispatch=>{
 
     try {
         const res= await axios.get(`http://localhost:4500/api/tours`)
-        
+       
         
         dispatch({
             type:GET_TOURS,

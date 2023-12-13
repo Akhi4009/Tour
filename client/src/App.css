@@ -388,7 +388,7 @@ body {
   transform: translate(-50%, -50%);
 }
 .heading-box__group {
-  color: #f7f7f7;
+  color: black;
   margin-top: 3rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -412,19 +412,11 @@ body {
   align-items: center;
   text-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15);
 }
-.heading-box__detail svg {
-  margin-right: 0.8rem;
-}
+
 .heading-box__detail:not(:last-child) {
   margin-right: 4rem;
 }
-.heading-box__icon {
-  height: 2rem;
-  width: 2rem;
-  fill: currentColor;
-  -webkit-filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
-  filter: drop-shadow(0 0.75rem 0.5rem rgba(0, 0, 0, 0.25));
-}
+
 
 .section-description {
   background-color: #fcfcfc;
@@ -544,7 +536,7 @@ body {
   margin-top: calc(0px - var(--section-rotate));
 }
 
-#map {
+.map {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -552,7 +544,7 @@ body {
 }
 
 .marker {
-  /* background-image: url('../img/pin.png'); */
+  
   background-size: cover;
   width: 32px;
   height: 40px;

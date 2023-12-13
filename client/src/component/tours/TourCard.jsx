@@ -9,7 +9,7 @@ const TourCard = ({tour}) => {
         duration,summary,
         ratingsAverage,
         ratingsQuantity,
-        price,maxGroupSize,createdAt,_id
+        price,maxGroupSize,_id,imageCover
     }=tour
   return (
     <>
@@ -18,8 +18,8 @@ const TourCard = ({tour}) => {
             <div className="card__picture">
               <div className="card__picture-overlay">&nbsp;</div>
               <img
-                src="img/tour-1-cover.jpg"
-                alt="Tour 1"
+                src={imageCover}
+                alt={name}
                 className="card__picture-img"
               />
             </div>
@@ -38,19 +38,19 @@ const TourCard = ({tour}) => {
               <svg className="card__icon">
                 
               </svg>
-              <span>Banff, Canada</span>
+              <span>{tour.startLocation.description}</span>
             </div>
             <div className="card__data">
               <svg className="card__icon">
                 
               </svg>
-              <span><Moment format='yyyy/MM'>{createdAt}</Moment></span>
+              <span><Moment format='yyyy/MM'>{tour.startDates[0]}</Moment></span>
             </div>
             <div className="card__data">
               <svg className="card__icon">
                 
               </svg>
-              <span>3 stops</span>
+              <span>{tour.locations.length} stops</span>
             </div>
             <div className="card__data">
               <svg className="card__icon">
