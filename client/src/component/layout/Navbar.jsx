@@ -31,7 +31,7 @@ return (
 {token && 
   <>
   <Link to="/" className="nav__el">My bookings</Link>
-<Link to="/" className="nav__el">
+<Link to="/me" className="nav__el">
 {user?.image && <img src="img/user.jpg" alt="User" className="nav__user-img" />}
   
   <span>{user?.name}</span>

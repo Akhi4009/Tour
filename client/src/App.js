@@ -6,7 +6,8 @@ import Tours from './component/tours/Tours';
 import Tour from './component/tour/Tour';
 import Footer from './component/layout/Footer';
 import Login from './component/auth/Login';
-// import Signup from './component/auth/Signup';
+import Account from './component/account/Account';
+
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <Routes>
     <Route path='/' element={<Tours/>}/>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/me' element={<Account/>}/>
     <Route path='/tours/:id' element={<Tour/>}/>
     </Routes>
    

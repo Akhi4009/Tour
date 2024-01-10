@@ -60,7 +60,8 @@ exports.logIn = catchAsync(async(req,res,next)=>{
     //everything ok
     res.status(200).send({
         status:"Success",
-        token
+        token,
+        user
     })
     
 })

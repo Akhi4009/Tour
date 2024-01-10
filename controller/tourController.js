@@ -54,7 +54,7 @@ try{
 
 const getTour=factory.getAll(Tour)
 const createTour=factory.createOne(Tour)
-const getTourByID=factory.getOne(Tour,{path:"reviews"})
+const getTourByID = factory.getOne(Tour,["reviews", "guides"] );
 const updateTour=factory.updateOne(Tour)
 const deleteTour= factory.deleteOne(Tour)
 

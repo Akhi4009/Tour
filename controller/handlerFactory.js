@@ -52,12 +52,11 @@ exports.createOne=Model=>catchAsync(async(req,res,next)=>{
 })
 
 exports.getOne=(Model,popoption)=>catchAsync(async(req,res,next)=>{
-
+console.log(popoption)
     let query =  await Model.findById(req.params.id);
-    if(popoption) query=query.populate(popoption)
+     if(popoption) query=query.populate(popoption)
 
-    
-    const doc= await query
+     const doc= await query
     
     
     if(!doc){
