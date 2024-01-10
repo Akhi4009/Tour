@@ -2,6 +2,8 @@ import React from 'react'
 import Moment from "react-moment"
 import {Link} from "react-router-dom"
 
+
+
 const TourCard = ({tour}) => {
 
     const {
@@ -11,6 +13,9 @@ const TourCard = ({tour}) => {
         ratingsQuantity,
         price,maxGroupSize,_id,imageCover
     }=tour
+    const image = `../../img/${imageCover}`
+    // console.log(image)
+   
   return (
     <>
     <div className="card">
@@ -18,7 +23,7 @@ const TourCard = ({tour}) => {
             <div className="card__picture">
               <div className="card__picture-overlay">&nbsp;</div>
               <img
-                src={imageCover}
+                src={image}
                 alt={name}
                 className="card__picture-img"
               />
@@ -72,6 +77,7 @@ const TourCard = ({tour}) => {
             <Link to={`/tours/${_id}`} className="btn btn--green btn--small">Details</Link>
           </div>
         </div>
+    
     </>
   )
 }

@@ -6,6 +6,7 @@ import Tours from './component/tours/Tours';
 import Tour from './component/tour/Tour';
 import Footer from './component/layout/Footer';
 import Login from './component/auth/Login';
+// import Signup from './component/auth/Signup';
 
 
 function App() {

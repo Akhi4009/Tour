@@ -3,19 +3,20 @@ import {useDispatch,useSelector} from "react-redux"
 import {useParams} from "react-router-dom"
 import {getTour} from "../redux/tour/action"
 import Moment from "react-moment"
-import Map from '../map/Map'
+
 
 const Tour = () => {
   const dispatch=useDispatch()
   const {id} = useParams()
   const {tour}=useSelector(state=>state.tour)
-  console.log(tour?.data.startLocation.coordinates)
-  const startPoint = {
-    type: 'Point',
-    coordinates: [51.505, -0.09],
-  };
+  
+  // console.log(tour?.data.startLocation.coordinates)
+  // const startPoint = {
+  //   type: 'Point',
+  //   coordinates: [51.505, -0.09],
+  // };
 
-  const startLocation = startPoint.coordinates;
+  // const startLocation = startPoint.coordinates;
   
   useEffect(()=>{
 
@@ -124,12 +125,6 @@ const Tour = () => {
 //       />
 //     </div>
           //           </section>*/}
-
-    <section style={{height:20}}>
-    
-  
-    
-    </section>
 
 
   <section className="section-reviews">
