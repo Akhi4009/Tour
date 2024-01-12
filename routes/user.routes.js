@@ -1,9 +1,13 @@
 const express=require('express')
-const router=express.Router()
+const multer = require('multer');
 const User=require("../model/usermodel")
 
 const {signup,logIn,protect,restrictTo,forgetPassword,resetPassword, updatePassword} = require("../controller/authController")
-const {getUser,updateMe,deleteMe, deleteUser, updateUser, userDetails,getMe} = require("../controller/userController")
+const {getUser,updateMe,deleteMe, deleteUser, updateUser, userDetails,getMe, uploadUserPhoto} = require("../controller/userController")
+
+
+
+const router=express.Router()
 
 router.post("/signup",signup)
 router.post("/login",logIn)
@@ -13,7 +17,7 @@ router.patch("/resetpassword/:token",resetPassword)
 router.use(protect)
 router.get("/me",getMe,userDetails)
 router.patch("/updatepassword", updatePassword)
-router.patch("/updateme", updateMe)
+router.patch("/updateme", uploadUserPhoto, updateMe)
 router.delete("/deleteme", deleteMe)
 
 //midleware
