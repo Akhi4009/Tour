@@ -51,6 +51,7 @@ const getMe=(req,res,next)=>{
 const updateMe=catchAsync(async(req,res,next)=>{
 
     // console.log(req.file);
+    console.log(req.body);
     
     // create error if user posts password data
     if(req.body.passwprd || req.body.passwordConfirm){
