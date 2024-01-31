@@ -22,7 +22,7 @@ return (
  
 {token !== null && name && (<>
   <Link to="/" className="nav__el">My bookings</Link>
-  <Link to="/me" className="nav__el">
+  <Link to="/account" className="nav__el">
   <img src={photo} alt={name} className="nav__user-img" />
     <span>{name}</span>
   </Link> 

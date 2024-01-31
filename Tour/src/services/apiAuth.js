@@ -36,3 +36,26 @@ export async function getUser(){
 export function logout(){
     deleteCookie("token");
 }
+
+export async function updateCurrentUser(data){
+
+   
+    try {
+        let res;
+        if(!data.password){
+            console.log(data);
+         res= await axios.patch(`http://localhost:4500/api/users/updateme`,data,config);
+        }else{
+         res= await axios.patch(`http://localhost:4500/api/users/updatepassword`,data,config);
+        }
+
+        if(res.data.token){
+           deleteCookie("token")
+           setCookie('token',res.data.token,10);
+        }
+        return res.data;
+    } catch (error) {
+        console.log(error)
+        throw new Error("Something went wrong try again");
+    }
+}

@@ -34,7 +34,9 @@ function App() {
     <Route path="tour" element={<Tours/>}/>
     <Route path="tour/:tourId" element={<Tour/>}/>
     
-    <Route path="account" element={<Account/>}/>
+    <Route path="account" element={<ProtectedRoute>
+      <Account/>
+      </ProtectedRoute>}/>
     </Route>
     <Route path="login" element={<Login/>}/>
     </Routes>

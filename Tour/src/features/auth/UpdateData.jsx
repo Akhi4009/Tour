@@ -1,15 +1,23 @@
-import React,{useState} from 'react'
+import {useEffect, useState} from 'react'
+import {useUser} from "./useUser";
+import { useUpdateUser } from './useUpdateUser';
 
 
 
-const UpdateData = ({user}) => {
-    const [email,setEmail] = useState(user? user.email:'');
-  const [name,setName] = useState(user? user.name:'');
-
+  const UpdateData = () => {
+  const {user:{email:curemail,name:curname,photo} ={} } = useUser();
+  const [email,setEmail] = useState("");
+  const [name,setName] = useState("");
+  const {updateUser, isUpdating } = useUpdateUser();
+  
+ useEffect(()=>{
+  setEmail(curemail);
+  setName(curname);
+ },[curemail,curname]);
 
   const handleSubmit=(e)=>{
     e.preventDefault();
-
+    updateUser({email,name});
   }
 
   
@@ -23,6 +31,7 @@ const UpdateData = ({user}) => {
             <input id="name" className="form__input" type="text"
              value={name} 
              onChange={(e)=>setName(e.target.value)}
+             disabled={isUpdating}
              required />
           </div>
           <div className="form__group ma-bt-md">
@@ -30,15 +39,19 @@ const UpdateData = ({user}) => {
             <input id="email" className="form__input" type="email" 
             value={email} 
             onChange={(e)=>setEmail(e.target.value)}
+            disabled={isUpdating}
             required />
           </div>
           <div className="form__group form__photo-upload">
-          {user?.photo &&  <img className="form__user-photo" src={`../../img/users/default.jpeg`} alt="User" /> }
+          {photo && <img className="form__user-photo" src={`../../img/users/default.jpeg`} alt="User" /> }
            
             <a className="btn-text" href="#">Choose new photo</a>
           </div>
           <div className="form__group right">
-            <button className="btn btn--small btn--green" type="submit">Save settings</button>
+            <button className="btn btn--small btn--green" 
+            type="submit"
+            disabled={isUpdating}
+            >Save settings</button>
           </div>
         </form>
       </div>
