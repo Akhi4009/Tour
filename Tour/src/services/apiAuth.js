@@ -38,12 +38,16 @@ export function logout(){
 }
 
 export async function updateCurrentUser(data){
-
-   
+    const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data', 
+        },
+      };
     try {
         let res;
         if(!data.password){
-            console.log(data);
+        
          res= await axios.patch(`http://localhost:4500/api/users/updateme`,data,config);
         }else{
          res= await axios.patch(`http://localhost:4500/api/users/updatepassword`,data,config);

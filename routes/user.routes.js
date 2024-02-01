@@ -2,8 +2,18 @@ const express=require('express')
 const multer = require('multer');
 const User=require("../model/usermodel")
 
-const {signup,logIn,protect,restrictTo,forgetPassword,resetPassword, updatePassword} = require("../controller/authController")
-const {getUser,updateMe,deleteMe, deleteUser, updateUser, userDetails,getMe, uploadUserPhoto} = require("../controller/userController")
+const {
+    signup,logIn,protect,
+    restrictTo,forgetPassword,
+    resetPassword, updatePassword
+    } = require("../controller/authController")
+
+const {
+    getUser,updateMe,deleteMe,
+     deleteUser, updateUser, 
+     userDetails,getMe, uploadUserPhoto,
+     resizeUserPhoto,
+    } = require("../controller/userController")
 
 
 
@@ -15,10 +25,11 @@ router.post("/forgetpassword",forgetPassword)
 router.patch("/resetpassword/:token",resetPassword)
 
 router.use(protect)
-router.get("/me",getMe,userDetails)
-router.patch("/updatepassword", updatePassword)
-router.patch("/updateme", uploadUserPhoto, updateMe)
-router.delete("/deleteme", deleteMe)
+router.get("/me",getMe,userDetails);
+router.patch("/updatepassword", updatePassword);
+router.patch("/updateme", uploadUserPhoto, resizeUserPhoto, updateMe);
+
+router.delete("/deleteme", deleteMe);
 
 //midleware
 router.use(restrictTo('admin','user'))
