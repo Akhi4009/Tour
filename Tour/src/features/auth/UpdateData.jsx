@@ -7,7 +7,7 @@ import { useUpdateUser } from './useUpdateUser';
   const UpdateData = () => {
   const {user:{email:curemail,name:curname,photo} ={} } = useUser();
   const {updateUser, isUpdating } = useUpdateUser();
-  const image = `public/img/users/${photo}`
+  const image = `/img/users/${photo}`
   const [email,setEmail] = useState("");
   const [name,setName] = useState("");
   const [avatar, setAvatar] = useState(null);

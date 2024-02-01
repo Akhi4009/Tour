@@ -15,7 +15,7 @@ const TourCard = ({tour}) => {
         ratingsQuantity,
         price,maxGroupSize,_id,imageCover,startDates
     }=tour
-    const image = `../../img/${imageCover}`
+    const image = `/img/tours/${imageCover}`
    
    
   return (

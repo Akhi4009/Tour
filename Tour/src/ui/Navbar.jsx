@@ -8,7 +8,7 @@ function Navbar() {
   const {user:{name,photo}={}} = useUser();
   const {logout, isLoading:isLoading1} = useLogout();
   
-  const image = `public/img/users/${photo}`;
+  const image = `/img/users/${photo}`;
 return (
     <>
     <header className="header">

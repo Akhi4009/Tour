@@ -9,16 +9,21 @@ const SingleTour = () => {
    
    const { 
     name, duration,difficulty,ratingsAverage,
-     startLocation,startDates,maxGoupSize,guides,description
+     startLocation,startDates,maxGoupSize,guides,description,imageCover,images
      } 
      
      = tour;
-   
+   const image = `/img/tours/${imageCover}`
   
 
   return (
     <>
     <section className="section-header">
+    <div class="header__hero">
+    <div class="header__hero-overlay">&nbsp;
+    </div>
+    <img class="header__hero-img" src={image} alt="Tour 5"/>
+   </div>
     <div className="heading-box">
       <h1 className="heading-primary">
         <span>{name}</span>
@@ -98,21 +103,21 @@ const SingleTour = () => {
     <div className="picture-box">
       <img
         className="picture-box__img picture-box__img--1"
-        src="/tour-1-cover.jpg"
+        src={`/img/tours/${images[0]}`}
         alt="The Park Camper Tour 1"
       />
     </div>
     <div className="picture-box">
       <img
         className="picture-box__img picture-box__img--2"
-        src="/tour-2-cover.jpg"
+        src={`/img/tours/${images[1]}`}
         alt="The Park Camper Tour 1"
       />
     </div>
     <div className="picture-box">
       <img
         className="picture-box__img picture-box__img--3"
-        src="/tour-3-cover.jpg"
+        src={`/img/tours/${images[2]}`}
         alt="The Park Camper Tour 1"
       />
     </div>
